@@ -7,6 +7,7 @@ import asyncio
 import httpx
 import os
 from dotenv import load_dotenv
+import uvicorn
 
 load_dotenv()
 
@@ -69,3 +70,8 @@ async def reply(request: Request):
         error_response = MessagingResponse()
         error_response.message(f"An error occurred: {str(e)}")
         return Response(content=str(error_response), media_type="application/xml")
+    
+    
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app.main:app", host="0.0.0.0", port=port)
